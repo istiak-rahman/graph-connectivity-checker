@@ -48,6 +48,20 @@ class Graph:
         return True
 
     def isStronglyConnected(self):
+        visited = [False for _ in range(self.nodes)]
+        visited_reversed = [False for _ in range(self.nodes)]
+
+        adj_reversed = [[] for _ in range(self.nodes)]
+        for u in range(self.nodes):
+            for v in self.adj[u]:
+                adj_reversed[v].append(u)
+
+        self.DFS(self.adj, 0, visited)
+        self.DFS(adj_reversed, 0, visited_reversed)
+
+        for i in range(self.nodes):
+            if not visited[i] or not visited_reversed[i]:
+                return False
         return True
 
     def DFS(self, adj, v, visited):
